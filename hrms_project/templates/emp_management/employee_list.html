@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Link Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Link your custom CSS file -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/css/select2.min.css" rel="stylesheet" />
+
+
+
+    <title>HRMS</title>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container-fluid {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .welcome-text {
+            color: #007bff;
+        }
+
+        .advanced-form {
+            margin-top: 20px;
+        }
+
+        .advanced-form label {
+            font-weight: bold;
+        }
+
+        .advanced-form input[type="text"],
+        .advanced-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        .advanced-form button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .advanced-form button:hover {
+            background-color: #0056b3;
+        }
+        /* In your CSS file */
+        .custom-brand {
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background-color: #4CAF50;
+            padding: 9px 9px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4) ;transition: background-color 0.3s ease, transform 0.3s ease;
+            background-color: #f8f9fa;
+            color: #495057;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .custom-brand:hover {
+            background-color: #ffffff;
+            color: #495057;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.133);
+            transform: scale(1.02);
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand custom-brand" href="{% url 'home' %}">🔴HRMS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                     <li class="nav-item"><a class="nav-link" href="{% url 'add_employee' %}">Add Employee</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'employee_list' %}">Total Employee</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'department_report' %}">Department Report</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container-lg mt-5">
+        
+        <div class="card mx-auto" style="width: 100%;">
+            <h2 class="text-center" >Total Employee</h2>
+            {% comment %} <a href="{% url 'employee_list_pdf' %}" download class="text-center">Download PDF</a> {% endcomment %}
+            <a href="{% url 'employee_list_csv' %}" download class="text-center">Download CSV</a>
+            <div class="card-body">
+                {% comment %} <h5 class="card-title mb-3 text-center">All Applicants for '{{ job.job_title }}' Position</h5> {% endcomment %}
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                {% comment %} <th scope="col" class="d-none d-sm-table-cell">ID</th> {% endcomment %}
+                                <th scope="col" class="d-none d-sm-table-cell">Name</th>
+                                <th scope="col" class="d-none d-sm-table-cell">Designation</th>
+                                <th scope="col" class="d-none d-sm-table-cell">Department</th>
+                                <th scope="col" class="d-none d-sm-table-cell">Date of Join</th>
+                                <th scope="col" class="d-none d-sm-table-cell">Mark Attendance</th>
+                                <th scope="col" class="d-none d-sm-table-cell">View Attendance</th>
+                                <th scope="col" class="d-none d-sm-table-cell">Update</th>
+                                <th scope="col" class="d-none d-sm-table-cell">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for employee in employees %}
+                            <tr>
+                                {% comment %} <td>{{ employee.id }}</td> {% endcomment %}
+                                <td>{{ employee.name }}</td>
+                                <td>{{ employee.designation }}</td>
+                                <td>{{ employee.department }}</td>
+                                <td>{{ employee.date_of_joining }}</td>
+                                <td><a href="{% url 'mark_attendance' employee.id %}">Mark Attendance</a></td>
+                                <td><a href="{% url 'attendance_details' employee.id %}">Attendance Details</a></td>
+                                <td><a href="{% url 'update_employee' employee.id %}">update</a></td>
+                                <td><a href="{% url 'delete_employee' employee.id %}">delete</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+    {% block content %}
+    {% endblock content %}
+    </div>
+    <!-- Link Bootstrap JS and Popper.js (required for Bootstrap dropdowns) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/js/select2.min.js"></script>
+</body>
+
+</html>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <h2>Welcome to the Home Page</h2>
+<a href="{% url 'employee_list_pdf' %}" download>Download Employee List as PDF</a>
+
+<ul>
+    {% for employee in employees %}
+      <li>{{ employee.name }} - {{ employee.department }} - {{ employee.designation }} - {{ employee.date_of_joining }}</li>
+    {% endfor %}
+  </ul> {% endcomment %}
+
+
+        {% comment %} {% comment %} {% comment %} {% comment %} {% comment %} <!-- employee_management/templates/employee_management/employee_list.html -->
+        {% comment %} <li class="nav-item"><a class="btn btn-danger" href="{% url 'home' %}"><b>Home</b></a></li> {% endcomment %}
+        {% comment %} <li class="nav-item"><a class="btn btn-danger" href="{% url 'add_employee' %}"><b>Add Employee</b></a></li> {% endcomment %}
+        {% comment %} <h2>Employee List</h2> {% endcomment %}
+
+        {% comment %} <ul>
+        {% for employee in employees %}
+            <li>{{ employee.name }} - {{ employee.department }} - {{ employee.designation }} - {{ employee.date_of_joining }} -<a href="{% url 'update_employee' employee.id %}">update</a> - <a href="{% url 'delete_employee' employee.id %}">delete</a> 
+                - <a href="{% url 'mark_attendance' employee.id %}">Mark Attendance</a>
+                - <a href="{% url 'attendance_details' employee.id %}">Attendance Details</a>
+            </li>
+        {% endfor %}
+        </ul> {% endcomment %}
+
+
+        {% comment %} <a href="{% url 'employee_list_pdf' %}" download>Download Employee List as PDF</a> {% endcomment %}
+        {% comment %} <p>{{ message }}</p> {% endcomment %} 
+
