@@ -1,8 +1,7 @@
-# reporting_management/models.py
-
 from django.db import models
 from emp_management.models import Employee
 
+# no. of employee in department used to chart
 class EmployeeReport(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     department = models.CharField(max_length=50)

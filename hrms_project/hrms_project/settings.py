@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR2=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR=os.path.join(BASE_DIR2, 'templates')
    
-#Fot static folder creation
+#For static folder creation
 STATIC_DIR=os.path.join(BASE_DIR2, 'static')
 
 # Quick-start development settings - unsuitable for production

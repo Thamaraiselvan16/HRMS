@@ -2,6 +2,8 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
+# models of emp_management
+# employee details db
 class Employee(models.Model):
     name = models.CharField(max_length=100, unique=True)
     designation = models.CharField(max_length=50)

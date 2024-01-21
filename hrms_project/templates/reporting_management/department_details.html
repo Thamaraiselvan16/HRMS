@@ -4,20 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Link Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
     <!-- Link your custom CSS file -->
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/css/select2.min.css" rel="stylesheet" />
-
-
-
     <title>HRMS</title>
-
     <style>
         body {
             background-color: #f8f9fa;
@@ -103,9 +97,9 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                     <li class="nav-item"><a class="nav-link" href="{% url 'add_employee' %}">Add Employee</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'employee_list' %}">Total Employee</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'department_report' %}">Department Report</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'add_employee' %}">Add Employee</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'employee_list' %}">Total Employee</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'department_report' %}">Department Report</a></li>
                 </ul>
             </div>
         </div>
@@ -115,6 +109,8 @@
         
         <div class="card mx-auto" style="width: 100%;">
             <h2 class="text-center">Department Details - {{ department_employees.0.department }}</h2>
+            <a href="{% url 'employee_list' %}" class="btn btn-danger btn-sm position-absolute top-0 end-0 start-2 mt-3 mr-3 me-3">Back</a>
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered text-center">
@@ -141,8 +137,8 @@
     </div>
 
     <div>
-    {% block content %}
-    {% endblock content %}
+        {% block content %}
+        {% endblock content %}
     </div>
     <!-- Link Bootstrap JS and Popper.js (required for Bootstrap dropdowns) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -151,18 +147,8 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Select2 JS -->
+    <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/js/select2.min.js"></script>
 </body>
 
 </html>
- 
-
-{% comment %} 
-<h2>Department Details - {{ department_employees.0.department }}</h2>
-
-<ul>
-  {% for employee in department_employees %}
-    <li>{{ employee.name }} - {{ employee.designation }} - {{ employee.date_of_joining }}</li>
-  {% endfor %}
-</ul> {% endcomment %}

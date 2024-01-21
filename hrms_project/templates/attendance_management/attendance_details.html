@@ -4,20 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Link Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
     <!-- Link your custom CSS file -->
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/css/select2.min.css" rel="stylesheet" />
-
-
-
     <title>HRMS</title>
-
     <style>
         body {
             background-color: #f8f9fa;
@@ -115,22 +109,14 @@
         
         <div class="card mx-auto" style="width: 100%;">
             <h2 class="text-center">Attendance Details for {{ employee.name }}</h2>
-            {% comment %} <a href="{% url 'employee_list_pdf' %}" download class="text-center">Download PDF</a> {% endcomment %}
+            <a href="{% url 'employee_list' %}" class="btn btn-danger btn-sm position-absolute top-0 end-0 start-2 mt-3 mr-3 me-3">Back</a>
             <div class="card-body">
-                {% comment %} <h5 class="card-title mb-3 text-center">All Applicants for '{{ job.job_title }}' Position</h5> {% endcomment %}
                 <div class="table-responsive">
                     <table class="table table-bordered text-center">
                         <thead>
                             <tr>
-                                {% comment %} <th scope="col" class="d-none d-sm-table-cell">ID</th> {% endcomment %}
-                                {% comment %} <th scope="col" class="d-none d-sm-table-cell">Name</th>/ {% endcomment %}
-                                {% comment %} <th scope="col" class="d-none d-sm-table-cell">Designation</th> {% endcomment %}
-                                {% comment %} <th scope="col" class="d-none d-sm-table-cell">Department</th> {% endcomment %}
                                 <th scope="col" class="d-none d-sm-table-cell">Date</th>
-                                {% comment %} <th scope="col" class="d-none d-sm-table-cell">Mark Attendance</th> {% endcomment %}
-                                {% comment %} <th scope="col" class="d-none d-sm-table-cell">View Attendance</th> {% endcomment %}
                                 <th scope="col" class="d-none d-sm-table-cell">Status</th>
-                                {% comment %} <th scope="col" class="d-none d-sm-table-cell">Delete</th> {% endcomment %}
                             </tr>
                         </thead>
                         <tbody>
@@ -138,13 +124,6 @@
                             <tr>
                                 <td>{{ attendance.date }}</td>
                                 <td>{{ attendance.status }}</td>
-                                {% comment %} <td>{{ employee.designation }}</td>
-                                <td>{{ employee.department }}</td>
-                                <td>{{ employee.date_of_joining }}</td>
-                                <td><a href="{% url 'mark_attendance' employee.id %}">Mark Attendance</a></td>
-                                <td><a href="{% url 'attendance_details' employee.id %}">Attendance Details</a></td>
-                                <td><a href="{% url 'update_employee' employee.id %}">update</a></td>
-                                <td><a href="{% url 'delete_employee' employee.id %}">delete</a></td> {% endcomment %}
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -155,40 +134,18 @@
     </div>
 
     <div>
-    {% block content %}
-    {% endblock content %}
+        {% block content %}
+        {% endblock content %}
     </div>
     <!-- Link Bootstrap JS and Popper.js (required for Bootstrap dropdowns) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Select2 JS -->
+    <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/js/select2.min.js"></script>
-</body>
 
+</body>
 </html>
  
-
-
-{% comment %} <h2>Attendance Details for {{ employee.name }}</h2>
-
-<table border="1">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for attendance in attendance_details %}
-      <tr>
-        <td>{{ attendance.date }}</td>
-        <td>{{ attendance.status }}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<li class="nav-item"><a class="btn btn-danger" href="{% url "employee_list" %}"><b>Back</b></a></li> {% endcomment %}
+{% comment %} <li class="nav-item"><a class="btn btn-danger" href="{% url "employee_list" %}"><b>Back</b></a></li> {% endcomment %}

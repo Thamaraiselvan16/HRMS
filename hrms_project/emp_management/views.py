@@ -1,41 +1,25 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Employee
 from django.http import HttpResponse
-from reportlab.pdfgen import canvas
 from .forms import EmployeeForm
-from django.db.models import Count
 import csv
-from django.http import HttpResponse
 from django.utils import timezone
-from .models import Employee
+from django.db import IntegrityError
+# from reportlab.pdfgen import canvas
+# from django.db.models import Count
+# from reportlab.lib.pagesizes import letter
+# from reportlab.lib import colors
+# from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+
 # Create your views here.
 
-
-# def home(request):
-#     employees=Employee.objects.all()
-#     return render(request, 'home.html', {'employees': employees})
-
-
+# all employee list
 def employee_list(request):
     employees = Employee.objects.all()
     total_department_count = employees.values('department').distinct().count()
     return render(request, 'emp_management/employee_list.html', {'employees': employees, 'total_department_count': total_department_count})
 
-
-from django.db import IntegrityError
-from django.shortcuts import render, redirect
-from .models import Employee
-
-from django.shortcuts import render, redirect
-from django.db import IntegrityError
-from django.utils import timezone
-from .models import Employee
-
-from django.db import IntegrityError
-from django.shortcuts import render, redirect
-from django.utils import timezone
-from .models import Employee
-
+# add a new employee
 def add_employee(request):
     message = ''
 
@@ -66,61 +50,51 @@ def add_employee(request):
 
     return render(request, 'emp_management/add_employee.html', {'message': message})
 
+# download pdf format
+# def employee_list_pdf(request):
+#     # A4 dimensions in pixels
+#     a4_width, a4_height = 595.276, 841.890
+
+#     employees = Employee.objects.all()
+
+#     response = HttpResponse(content_type='application/pdf')
+#     response['Content-Disposition'] = 'attachment; filename="employee_list.pdf"'
+
+#     # Create the PDF object, using the response object as its "file."
+#     pdf_buffer = HttpResponse(content_type='application/pdf')
+#     pdf_buffer['Content-Disposition'] = 'attachment; filename="employee_list.pdf"'
+
+#     # Create the PDF object, using the response object as its "file."
+#     pdf = SimpleDocTemplate(pdf_buffer, pagesize=(a4_width, a4_height))
+
+#     # Add content to the PDF here
+#     data = [['Name', 'Department', 'Designation', 'Date of Joining']]
+#     for employee in employees:
+#         data.append([employee.name, employee.department, employee.designation, str(employee.date_of_joining)])
+
+#     # Create the table
+#     table = Table(data, colWidths=[150, 150, 150, 150])
+
+#     # Add style to the table
+#     style = TableStyle([
+#         ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+#         ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+#         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+#         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+#         ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+#         ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+#         ('GRID', (0, 0), (-1, -1), 1, colors.black)
+#     ])
+#     table.setStyle(style)
+
+#     # Build the PDF
+#     elements = [table]
+#     pdf.build(elements)
+
+#     return pdf_buffer
 
 
-
-
-
-from reportlab.lib.pagesizes import letter
-from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
-from django.http import HttpResponse
-
-def employee_list_pdf(request):
-    # A4 dimensions in pixels
-    a4_width, a4_height = 595.276, 841.890
-
-    employees = Employee.objects.all()
-
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="employee_list.pdf"'
-
-    # Create the PDF object, using the response object as its "file."
-    pdf_buffer = HttpResponse(content_type='application/pdf')
-    pdf_buffer['Content-Disposition'] = 'attachment; filename="employee_list.pdf"'
-
-    # Create the PDF object, using the response object as its "file."
-    pdf = SimpleDocTemplate(pdf_buffer, pagesize=(a4_width, a4_height))
-
-    # Add content to the PDF here
-    data = [['Name', 'Department', 'Designation', 'Date of Joining']]
-    for employee in employees:
-        data.append([employee.name, employee.department, employee.designation, str(employee.date_of_joining)])
-
-    # Create the table
-    table = Table(data, colWidths=[150, 150, 150, 150])
-
-    # Add style to the table
-    style = TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-        ('GRID', (0, 0), (-1, -1), 1, colors.black)
-    ])
-    table.setStyle(style)
-
-    # Build the PDF
-    elements = [table]
-    pdf.build(elements)
-
-    return pdf_buffer
-
-
-    
-
+# download csv format
 def employee_list_csv(request):
     employees = Employee.objects.all()
 
@@ -139,8 +113,7 @@ def employee_list_csv(request):
 
     return response
 
-
-
+# Updation of employee
 def update_employee(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
 
@@ -154,6 +127,7 @@ def update_employee(request, employee_id):
 
     return render(request, 'emp_management/update_employee.html', {'form': form, 'employee': employee})
 
+# Deletion of employee
 def delete_employee(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
 

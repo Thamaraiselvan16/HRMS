@@ -4,7 +4,7 @@ from emp_management.models import Employee
 from django.utils import timezone
 from attendance_management.models import Attendance  
 
-
+# mark attendance fro individual employee
 def mark_attendance(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
 
@@ -33,7 +33,7 @@ def mark_attendance(request, employee_id):
 
     return render(request, 'attendance_management/mark_attendance.html', {'employee': employee})
 
-
+# attendance details of individual employee
 def attendance_details(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
     attendance_details = Attendance.objects.filter(employee=employee)

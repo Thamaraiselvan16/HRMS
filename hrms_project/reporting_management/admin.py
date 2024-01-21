@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import EmployeeReport
 
+# it will show on admin page "superuser"
 class EmployeeReportAdmin(admin.ModelAdmin):
     list_display = ('employee', 'department', 'date', 'status')
     list_filter = ('department', 'date', 'status', 'employee__designation')  # Filter by department, date, status, and employee designation

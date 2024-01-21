@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Attendance
 
+# it will show on admin page "superuser"
 class AttendanceAdmin(admin.ModelAdmin):
     list_display = ('employee', 'date', 'status')
     list_filter = ('status', 'date', 'employee__department')  # Filter by status, date, and employee department
