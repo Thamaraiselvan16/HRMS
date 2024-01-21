@@ -26,6 +26,10 @@
 5. Create super user to view admin page: `python manage.py createsuperuser`
 6. Run the Django app: `python manage.py runserver`
 
+if anu `error` once install virtualenv: `pip install virutualenv` `python manage.py virutualenv venv_file_name`
+and
+install Django : `pip install django`
+
 ## objective
 
 Eager to kickstart my career journey in a vibrant company, I
